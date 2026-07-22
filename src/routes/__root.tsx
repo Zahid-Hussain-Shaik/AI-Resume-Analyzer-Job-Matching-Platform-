@@ -79,14 +79,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "ResumeIQ — AI Resume Analyzer & Job Match" },
+      { title: "AI Resume Analyzer & Job Match Platform" },
       {
         name: "description",
         content:
           "Analyze your resume against any job description with AI. Get instant ATS scores, missing keywords, and personalized improvement tips.",
       },
-      { name: "author", content: "ResumeIQ" },
-      { property: "og:title", content: "ResumeIQ — AI Resume Analyzer & Job Match" },
+      { name: "author", content: "AI Resume Analyzer & Job Match Platform" },
+      { property: "og:title", content: "AI Resume Analyzer & Job Match Platform" },
       {
         property: "og:description",
         content:
@@ -97,7 +97,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      {
+        rel: "icon",
+        href: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E",
+        type: "image/svg+xml",
+      },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {

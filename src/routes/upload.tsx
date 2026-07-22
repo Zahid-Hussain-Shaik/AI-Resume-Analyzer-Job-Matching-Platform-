@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { FileText, ArrowRight } from "lucide-react";
 
 export const Route = createFileRoute("/upload")({
-  head: () => ({ meta: [{ title: "Upload Resume · ResumeIQ" }] }),
+  head: () => ({ meta: [{ title: "Upload Resume · AI Resume Analyzer & Job Match Platform" }] }),
   component: UploadPage,
 });
 
@@ -28,7 +28,7 @@ function UploadPage() {
             <CardContent>
               <ResumeUploader onFile={setFile} />
               <div className="mt-6 flex justify-end">
-                <Button asChild disabled={!file} className="gradient-primary">
+                <Button asChild disabled={!file}>
                   <Link to="/job-description">
                     Continue <ArrowRight className="ml-1 h-4 w-4" />
                   </Link>

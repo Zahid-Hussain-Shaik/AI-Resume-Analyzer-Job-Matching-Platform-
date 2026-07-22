@@ -16,7 +16,7 @@ import {
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/settings")({
-  head: () => ({ meta: [{ title: "Settings · ResumeIQ" }] }),
+  head: () => ({ meta: [{ title: "Settings · AI Resume Analyzer & Job Match Platform" }] }),
   component: SettingsPage,
 });
 
@@ -36,7 +36,10 @@ function SettingsPage() {
                 <Label>Theme</Label>
                 <p className="text-xs text-muted-foreground">Choose your color scheme.</p>
               </div>
-              <Select value={theme} onValueChange={(v) => setTheme(v as "light" | "dark" | "system")}>
+              <Select
+                value={theme}
+                onValueChange={(v) => setTheme(v as "light" | "dark" | "system")}
+              >
                 <SelectTrigger className="w-36">
                   <SelectValue />
                 </SelectTrigger>
@@ -56,8 +59,16 @@ function SettingsPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             {[
-              { id: "email", label: "Email notifications", desc: "Analysis completion, weekly digests." },
-              { id: "product", label: "Product updates", desc: "New features, tips, and improvements." },
+              {
+                id: "email",
+                label: "Email notifications",
+                desc: "Analysis completion, weekly digests.",
+              },
+              {
+                id: "product",
+                label: "Product updates",
+                desc: "New features, tips, and improvements.",
+              },
               { id: "marketing", label: "Marketing", desc: "Occasional promotions and news." },
             ].map((n, i) => (
               <div key={n.id}>
@@ -92,7 +103,9 @@ function SettingsPage() {
             <div className="flex items-center justify-between">
               <div>
                 <Label className="text-destructive">Delete account</Label>
-                <p className="text-xs text-muted-foreground">Permanently remove your account and data.</p>
+                <p className="text-xs text-muted-foreground">
+                  Permanently remove your account and data.
+                </p>
               </div>
               <Button variant="destructive">Delete</Button>
             </div>

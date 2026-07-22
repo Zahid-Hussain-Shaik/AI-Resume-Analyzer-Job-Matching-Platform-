@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { AppShell } from "@/components/app-shell";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -13,21 +13,37 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { mockReports } from "@/constants/mock-data";
+import { analysisApi } from "@/services/api";
+import type { AnalysisResult } from "@/types/analysis";
 import { formatDate } from "@/utils/format";
-import { Download, FolderClock, Search, ArrowUpRight } from "lucide-react";
+import { Download, FolderClock, Search, ArrowUpRight, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/reports")({
-  head: () => ({ meta: [{ title: "Reports · ResumeIQ" }] }),
+  head: () => ({ meta: [{ title: "Reports · AI Resume Analyzer & Job Match Platform" }] }),
   component: ReportsPage,
 });
 
 function ReportsPage() {
   const [q, setQ] = useState("");
   const [sort, setSort] = useState("recent");
+  const [reports, setReports] = useState<AnalysisResult[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let mounted = true;
+    analysisApi.list().then((data) => {
+      if (mounted) {
+        setReports(data);
+        setLoading(false);
+      }
+    });
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const filtered = useMemo(() => {
-    let list = mockReports.filter(
+    let list = reports.filter(
       (r) =>
         r.jobTitle.toLowerCase().includes(q.toLowerCase()) ||
         (r.company ?? "").toLowerCase().includes(q.toLowerCase()),
@@ -37,7 +53,7 @@ function ReportsPage() {
     if (sort === "recent")
       list = [...list].sort((a, b) => +new Date(b.createdAt) - +new Date(a.createdAt));
     return list;
-  }, [q, sort]);
+  }, [reports, q, sort]);
 
   return (
     <AppShell title="Reports">
@@ -64,13 +80,21 @@ function ReportsPage() {
           </Select>
         </div>
 
-        {filtered.length === 0 ? (
+        {loading ? (
+          <div className="flex h-48 items-center justify-center rounded-xl border bg-card text-muted-foreground">
+            <Sparkles className="mr-2 h-5 w-5 animate-spin text-primary" /> Loading reports...
+          </div>
+        ) : filtered.length === 0 ? (
           <EmptyState
             icon={FolderClock}
-            title="No reports found"
-            description="Try a different search or create a new analysis."
+            title={reports.length === 0 ? "No Reports Saved Yet" : "No Matching Reports"}
+            description={
+              reports.length === 0
+                ? "Start a new analysis by uploading your resume and pasting a job description."
+                : "Try adjusting your search query or filter settings."
+            }
             action={
-              <Button asChild className="gradient-primary">
+              <Button asChild>
                 <Link to="/upload">New analysis</Link>
               </Button>
             }
@@ -103,7 +127,7 @@ function ReportsPage() {
                     <Button variant="outline" size="sm">
                       <Download className="mr-1 h-3.5 w-3.5" /> PDF
                     </Button>
-                    <Button asChild size="sm" className="gradient-primary">
+                    <Button asChild size="sm">
                       <Link to="/analysis">
                         View <ArrowUpRight className="ml-1 h-3.5 w-3.5" />
                       </Link>

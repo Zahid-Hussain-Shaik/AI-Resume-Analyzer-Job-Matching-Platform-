@@ -11,13 +11,16 @@ import { toast } from "sonner";
 import { useState } from "react";
 
 export const Route = createFileRoute("/profile")({
-  head: () => ({ meta: [{ title: "Profile · ResumeIQ" }] }),
+  head: () => ({ meta: [{ title: "Profile · AI Resume Analyzer & Job Match Platform" }] }),
   component: ProfilePage,
 });
 
 function ProfilePage() {
   const [p, setP] = useState(mockProfile);
-  const initials = p.name.split(" ").map((n) => n[0]).join("");
+  const initials = p.name
+    .split(" ")
+    .map((n) => n[0])
+    .join("");
 
   return (
     <AppShell title="Profile">
@@ -45,32 +48,54 @@ function ProfilePage() {
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="name">Full name</Label>
-                <Input id="name" value={p.name} onChange={(e) => setP({ ...p, name: e.target.value })} />
+                <Input
+                  id="name"
+                  value={p.name}
+                  onChange={(e) => setP({ ...p, name: e.target.value })}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" value={p.email} onChange={(e) => setP({ ...p, email: e.target.value })} />
+                <Input
+                  id="email"
+                  type="email"
+                  value={p.email}
+                  onChange={(e) => setP({ ...p, email: e.target.value })}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="title">Job title</Label>
-                <Input id="title" value={p.title} onChange={(e) => setP({ ...p, title: e.target.value })} />
+                <Input
+                  id="title"
+                  value={p.title}
+                  onChange={(e) => setP({ ...p, title: e.target.value })}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="location">Location</Label>
-                <Input id="location" value={p.location} onChange={(e) => setP({ ...p, location: e.target.value })} />
+                <Input
+                  id="location"
+                  value={p.location}
+                  onChange={(e) => setP({ ...p, location: e.target.value })}
+                />
               </div>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="bio">Bio</Label>
-              <Textarea id="bio" rows={4} value={p.bio} onChange={(e) => setP({ ...p, bio: e.target.value })} />
+              <Textarea
+                id="bio"
+                rows={4}
+                value={p.bio}
+                onChange={(e) => setP({ ...p, bio: e.target.value })}
+              />
             </div>
 
             <div className="flex justify-end gap-2">
-              <Button variant="outline" onClick={() => setP(mockProfile)}>Reset</Button>
-              <Button className="gradient-primary" onClick={() => toast.success("Profile saved")}>
-                Save changes
+              <Button variant="outline" onClick={() => setP(mockProfile)}>
+                Reset
               </Button>
+              <Button onClick={() => toast.success("Profile saved")}>Save changes</Button>
             </div>
           </CardContent>
         </Card>

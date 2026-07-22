@@ -10,7 +10,7 @@ import { Sparkles, ArrowRight, FileText } from "lucide-react";
 import { sampleJobDescription } from "@/constants/mock-data";
 
 export const Route = createFileRoute("/job-description")({
-  head: () => ({ meta: [{ title: "Job Description · ResumeIQ" }] }),
+  head: () => ({ meta: [{ title: "Job Description · AI Resume Analyzer & Job Match Platform" }] }),
   component: JobDescriptionPage,
 });
 
@@ -83,7 +83,7 @@ function JobDescriptionPage() {
               <Button asChild variant="ghost">
                 <Link to="/upload">Back</Link>
               </Button>
-              <Button asChild disabled={text.length < 50} className="gradient-primary">
+              <Button asChild disabled={text.length < 50}>
                 <Link to="/analysis">
                   Analyze <ArrowRight className="ml-1 h-4 w-4" />
                 </Link>

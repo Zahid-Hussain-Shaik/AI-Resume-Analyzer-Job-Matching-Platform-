@@ -54,24 +54,26 @@ export function ResumeUploader({ onFile }: ResumeUploaderProps) {
       <div
         {...getRootProps()}
         className={cn(
-          "flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed bg-card p-10 text-center transition-colors",
+          "flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed bg-card p-10 text-center transition-colors",
           isDragActive
             ? "border-primary bg-primary/5"
             : "border-border hover:border-primary/50 hover:bg-accent/30",
         )}
       >
         <input {...getInputProps()} />
-        <div className="flex h-14 w-14 items-center justify-center rounded-full gradient-primary shadow-glow">
+        <div className="flex h-14 w-14 items-center justify-center rounded-md bg-primary">
           <Upload className="h-6 w-6 text-primary-foreground" />
         </div>
         <p className="mt-4 font-display text-base font-semibold">
           {isDragActive ? "Drop your resume here" : "Drag & drop your resume"}
         </p>
-        <p className="mt-1 text-sm text-muted-foreground">or click to browse — PDF or DOCX, up to 10MB</p>
+        <p className="mt-1 text-sm text-muted-foreground">
+          or click to browse - PDF or DOCX, up to 10MB
+        </p>
       </div>
 
       {file && (
-        <div className="rounded-xl border bg-card p-4 shadow-card">
+        <div className="rounded-lg border bg-card p-4 shadow-card">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
               <FileText className="h-5 w-5 text-primary" />
