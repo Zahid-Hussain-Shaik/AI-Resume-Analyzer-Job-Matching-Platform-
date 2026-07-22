@@ -1,213 +1,215 @@
-# 🚀 AI Resume Analyzer & Job Match Platform — Backend API
+# AI Resume Analyzer & Job Match Platform
 
-Production-ready Node.js, Express, and PostgreSQL backend for an AI-powered Resume Analyzer & Job Match Platform. This backend uses Prisma ORM, JWT authentication, Zod validation, PDF/DOCX file text extraction, and dual AI model support (Google Gemini 2.0 Flash & OpenAI GPT-4o-mini).
+AI Resume Analyzer & Job Match Platform helps candidates evaluate resumes against job descriptions, understand ATS readiness, and get practical improvement suggestions. The platform includes a React frontend experience and a Node.js backend API for authentication, resume parsing, analysis history, and AI-powered recommendations.
 
----
+## Features
 
-## ✨ Features
+- Resume upload workflow for PDF and DOCX files
+- Job description matching and keyword gap analysis
+- ATS score and job match score reporting
+- AI-generated improvement recommendations
+- Analysis dashboard and report history
+- User authentication and profile-aware UI
+- Responsive frontend with dark mode support
+- Backend API with Swagger documentation
+- Docker-ready backend setup
 
-- **🔒 User Authentication**: Secure JWT-based authentication with bcrypt password hashing (12 salt rounds).
-- **📄 Resume Upload & Text Extraction**: Accepts PDF and DOCX uploads using Multer, automatically extracting raw text via `pdf-parse` and `mammoth`.
-- **🤖 AI Resume & Job Matching**: Evaluates resume text against job descriptions using Google Gemini 2.0 Flash or OpenAI GPT-4o-mini.
-- **📊 ATS & Match Scoring**: Computes objective ATS compatibility and job role match scores (0–100%).
-- **💡 Actionable Improvement Suggestions**: Returns prioritized recommendations (High/Medium/Low) categorized by Skills, Experience, Formatting, and Education.
-- **🔍 Keyword Gap Analysis**: Identifies matched and missing job keywords.
-- **📜 Analysis History**: Paginated, filterable history of all candidate resume analyses.
-- **📥 Exportable Reports**: Endpoint to fetch full structured JSON analysis reports.
-- **📖 Swagger/OpenAPI Specs**: Interactive API documentation at `/api/docs`.
-- **🐳 Docker Ready**: Multi-stage `Dockerfile` and `docker-compose.yml` with PostgreSQL configuration.
+## Tech Stack
 
----
+### Frontend
 
-## 🛠️ Tech Stack
+- React 19
+- TypeScript
+- Vite
+- TanStack Router
+- TanStack Query
+- Tailwind CSS
+- Radix UI
+- React Three Fiber and Drei
+- Lucide React
 
-- **Runtime**: Node.js (v20+) & TypeScript
-- **Framework**: Express.js
-- **Database**: PostgreSQL
-- **ORM**: Prisma ORM
-- **Authentication**: JWT (JSON Web Tokens) & bcryptjs
-- **File Processing**: Multer, `pdf-parse`, `mammoth`
-- **Validation**: Zod
-- **AI Integration**: Google Gemini 2.0 Flash / OpenAI API (`gpt-4o-mini`)
-- **Logging & Security**: Winston, Morgan, Helmet, CORS, Express-Rate-Limit
-- **Documentation**: Swagger UI & `swagger-jsdoc`
+### Backend
 
----
+- Node.js
+- Express
+- TypeScript
+- Prisma ORM
+- PostgreSQL or SQLite, depending on environment configuration
+- JWT authentication
+- Zod validation
+- Multer file uploads
+- pdf-parse and mammoth document parsing
+- Gemini or OpenAI integration
+- Swagger UI
 
-## 📁 Directory Structure
+## Frontend Setup
 
-```
-backend/
-├── src/
-│   ├── app.ts                  # Main Express application entry point
-│   ├── config/                 # Environment, Database, and Swagger configurations
-│   ├── controllers/            # Request handlers (Auth, Resume, Analysis)
-│   ├── middleware/             # Auth, File Upload, Validation & Error handling
-│   ├── models/                 # Model type helpers & DTO placeholders
-│   ├── routes/                 # Express routes with Swagger annotations
-│   ├── services/               # Core business logic & AI API calls
-│   ├── types/                  # Shared TypeScript interfaces
-│   ├── utils/                  # Winston Logger, Custom Error & API Response helpers
-│   └── validations/            # Zod validation schemas
-├── prisma/
-│   ├── schema.prisma           # Prisma database schema definition
-│   └── seed.ts                 # Database seeder script
-├── uploads/                    # Directory for uploaded resume files
-├── Dockerfile                  # Production Docker multi-stage build
-├── docker-compose.yml          # Services definition (API + PostgreSQL)
-├── .env.example                # Template for environment variables
-├── package.json
-└── tsconfig.json
+Install dependencies:
+
+```bash
+npm install
 ```
 
----
+Start the frontend development server:
 
-## 🚀 Getting Started
+```bash
+npm run dev
+```
 
-### Prerequisites
+The local frontend URL is shown by Vite in the terminal. In this workspace, it has run at:
 
-- Node.js (v18+)
-- PostgreSQL database (or Docker installed)
-- Gemini API Key or OpenAI API Key
+```text
+http://127.0.0.1:8080/
+```
 
-### 1. Installation
+## Frontend Scripts
 
-Clone the project and navigate to the backend folder:
+```bash
+npm run dev
+```
+
+Start the local development server.
+
+```bash
+npm run build
+```
+
+Create a production build.
+
+```bash
+npm run build:dev
+```
+
+Create a development-mode build.
+
+```bash
+npm run preview
+```
+
+Preview the production build locally.
+
+```bash
+npm run lint
+```
+
+Run ESLint checks.
+
+```bash
+npm run format
+```
+
+Format the project with Prettier.
+
+## Backend Setup
+
+If the backend folder is available in your workspace, install and run it separately:
 
 ```bash
 cd backend
 npm install
 ```
 
-### 2. Environment Setup
-
-Create a `.env` file in the `backend` directory based on `.env.example`:
+Create a `.env` file from `.env.example` and configure the required values:
 
 ```env
 NODE_ENV=development
 PORT=5000
-
-# Database
 DATABASE_URL="postgresql://postgres:postgres@localhost:5432/resume_analyzer?schema=public"
-
-# JWT
 JWT_SECRET="your-super-secret-jwt-key"
 JWT_EXPIRES_IN="7d"
-
-# AI Provider Configuration ("gemini" or "openai")
 AI_PROVIDER="gemini"
 GEMINI_API_KEY="your-gemini-api-key"
 OPENAI_API_KEY="your-openai-api-key"
-
-# Upload & Rate Limit Settings
 MAX_FILE_SIZE=10485760
 UPLOAD_DIR="./uploads"
 RATE_LIMIT_WINDOW_MS=900000
 RATE_LIMIT_MAX=100
 ```
 
-### 3. Database Migration & Prisma Client
-
-Ensure your PostgreSQL service is running, then run:
+Generate Prisma client and run migrations:
 
 ```bash
-# Generate Prisma Client
 npm run prisma:generate
-
-# Run database migrations
 npm run prisma:migrate
 ```
 
-### 4. Running the Application
+Start the backend server:
 
 ```bash
-# Development mode (with live reload)
 npm run dev
-
-# Production build & start
-npm run build
-npm start
 ```
 
----
+Backend API docs:
 
-## 🐳 Running with Docker
-
-You can launch both PostgreSQL and the Backend API simultaneously using Docker Compose:
-
-```bash
-# Build and start services
-docker-compose up -d
-
-# Stop services
-docker-compose down
+```text
+http://localhost:5000/api/docs
 ```
 
----
+Health check:
 
-## 📚 API Endpoints Summary
+```text
+http://localhost:5000/api/health
+```
+
+## Backend API Summary
 
 ### Authentication
-- `POST /api/v1/auth/register` — Register a new account
-- `POST /api/v1/auth/login` — Login & obtain JWT token
-- `GET /api/v1/auth/profile` — Fetch current user profile *(Requires Auth)*
+
+- `POST /api/v1/auth/register` - Register a new account
+- `POST /api/v1/auth/login` - Login and receive a JWT
+- `GET /api/v1/auth/profile` - Fetch the current user profile
 
 ### Resume Management
-- `POST /api/v1/resume/upload` — Upload PDF/DOCX resume file *(Requires Auth)*
-- `GET /api/v1/resume` — List user's resumes *(Requires Auth)*
-- `GET /api/v1/resume/:id` — Get specific resume details *(Requires Auth)*
-- `DELETE /api/v1/resume/:id` — Delete a resume *(Requires Auth)*
 
-### AI Resume Analysis
-- `POST /api/v1/analysis` — Analyze resume against job description *(Requires Auth)*
-- `GET /api/v1/analysis/history` — Get paginated analysis history *(Requires Auth)*
-- `GET /api/v1/analysis/:id` — Get analysis result details *(Requires Auth)*
-- `DELETE /api/v1/analysis/:id` — Delete analysis record *(Requires Auth)*
-- `GET /api/v1/analysis/:id/report` — Export structured JSON report *(Requires Auth)*
+- `POST /api/v1/resume/upload` - Upload a PDF or DOCX resume
+- `GET /api/v1/resume` - List uploaded resumes
+- `GET /api/v1/resume/:id` - Get resume details
+- `DELETE /api/v1/resume/:id` - Delete a resume
 
-### Documentation & Health
-- `GET /api/docs` — Interactive Swagger UI Documentation
-- `GET /api/health` — Health check endpoint
+### Resume Analysis
 
----
+- `POST /api/v1/analysis` - Analyze a resume against a job description
+- `GET /api/v1/analysis/history` - Get analysis history
+- `GET /api/v1/analysis/:id` - Get analysis details
+- `DELETE /api/v1/analysis/:id` - Delete an analysis
+- `GET /api/v1/analysis/:id/report` - Export a structured report
 
-## 🧪 Testing with cURL
+## Frontend Project Structure
 
-### 1. Register a User
-```bash
-curl -X POST http://localhost:5000/api/v1/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{"email": "user@example.com", "password": "Password123", "name": "Jane Doe"}'
+```text
+src/
+  components/      Reusable app and UI components
+  constants/       Mock data and app constants
+  hooks/           Shared React hooks
+  lib/             Utility and error-handling helpers
+  routes/          TanStack Router route files
+  services/        API client logic
+  types/           Shared TypeScript types
+  utils/           Formatting helpers
 ```
 
-### 2. Login
-```bash
-curl -X POST http://localhost:5000/api/v1/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email": "user@example.com", "password": "Password123"}'
+## Backend Connection
+
+The frontend API client points to:
+
+```text
+http://localhost:5000/api/v1
 ```
 
-### 3. Upload Resume
+When the backend is unavailable, selected UI flows use demo data so the app can still be explored.
+
+## Deployment
+
+Build the frontend before deployment:
+
 ```bash
-curl -X POST http://localhost:5000/api/v1/resume/upload \
-  -H "Authorization: Bearer <YOUR_JWT_TOKEN>" \
-  -F "file=@/path/to/resume.pdf"
+npm run build
 ```
 
-### 4. Create Analysis
-```bash
-curl -X POST http://localhost:5000/api/v1/analysis \
-  -H "Authorization: Bearer <YOUR_JWT_TOKEN>" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "resumeId": "<RESUME_UUID>",
-    "jobTitle": "Full Stack Developer",
-    "jobDescription": "We are seeking a Full Stack Developer experienced with Node.js, Express, React, and PostgreSQL..."
-  }'
-```
+Deploy the generated production output to your hosting provider of choice.
 
----
+For backend deployment, configure environment variables, provision the database, run Prisma migrations, and start the compiled Node application.
 
-## 📄 License
+## License
 
-This project is licensed under the [MIT License](LICENSE).
+MIT
