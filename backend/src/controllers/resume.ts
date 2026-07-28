@@ -1,0 +1,5 @@
+import { RequestHandler } from 'express';
+import path from 'node:path';
+import { prisma } from '../utils/prisma.js';
+import { extractText, removeFile } from '../services/parser.js';
+export const upload: RequestHandler = async (req, res, next) => { try { if (!req.user) return res.status(401).end(); if (!req.file) return res.status(400).json({ success: false, error: 'Resume file is required' }); const text = await extractText(req.file.path, req.file.mimetype); if (text.length < 30) { await removeFile(req.file.path); return res.status(422).json({ success: false, error: 'Could not extract enough text from resume' }); } const resume = await prisma.resume.create({ data: { userId: req.user.id, originalName: req.file.originalname, storedName: path.basename(req.file.filename), mimeType: req.file.mimetype, size: req.file.size, text } }); res.status(201).json({ success: true, data: { id: resume.id, originalName: resume.originalName, createdAt: resume.createdAt } }); } catch (e) { if (req.file) await removeFile(req.file.path); next(e); } };
