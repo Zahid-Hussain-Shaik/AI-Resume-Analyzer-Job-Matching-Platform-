@@ -2,6 +2,10 @@
 
 Full-stack monorepo for resume analysis and job matching.
 
+## Live demo
+
+[Open the live application](https://resume-analyzer-frontend-j3fk.onrender.com/)
+
 ## Project structure
 
 ```text
